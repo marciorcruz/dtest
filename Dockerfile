@@ -16,8 +16,6 @@ COPY . /app/
 
 EXPOSE 8000
 
-ENV DJANGO_SETTINGS_MODULE=dtest.settings
-
 # 4) Garante que o entrypoint seja executável
 RUN chmod +x /app/entrypoint.sh
 

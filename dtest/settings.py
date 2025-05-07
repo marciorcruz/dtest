@@ -40,7 +40,7 @@ ROOT_URLCONF = 'dtest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'apps/orders/templates'],  # caminho direto
+        'DIRS': [],  # ou apenas use diretórios que não colidam com o admin
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -57,7 +57,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'dtest.wsgi.application'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / "staticfiles"  # usado pelo collectstatic
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
