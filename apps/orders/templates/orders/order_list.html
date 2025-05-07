@@ -1,0 +1,19 @@
+{% extends "orders/base.html" %}
+
+{% block title %}Lista de Pedidos{% endblock %}
+
+{% block content %}
+<h2>Pedidos</h2>
+<ul>
+    {% for order in orders %}
+        <li>
+            Pedido #{{ order.id }} - Total: {{ order.total.amount }}
+            <ul>
+                {% for item in order.items %}
+                    <li>{{ item.product_id }}: {{ item.quantity }} × {{ item.price.amount }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

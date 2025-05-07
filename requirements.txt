@@ -1,0 +1,10 @@
+Django>=4.2
+djangorestframework
+gunicorn
+psycopg2-binary
+dj-database-url
+pytest
+pytest-django
+celery
+redis
+django-celery-beat>=2.6.0

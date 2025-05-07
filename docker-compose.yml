@@ -1,0 +1,62 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: django
+      POSTGRES_PASSWORD: django
+      POSTGRES_DB: django_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  broker:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+
+  worker:
+    build: .
+    command: celery -A dtest worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - web
+      - broker
+    environment:
+      - CELERY_BROKER_URL=redis://broker:6379/0
+      - DATABASE_URL=postgres://django:django@db:5432/django_db
+      - BROKER_URL=redis://broker:6379/0
+
+  web:
+    build: .
+    command: gunicorn dtest.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+      - broker
+    environment:
+      - CELERY_BROKER_URL=redis://broker:6379/0
+      - BROKER_URL=redis://broker:6379/0
+      - DATABASE_URL=postgres://django:django@db:5432/django_db
+
+  beat:
+    build: .
+    command: celery -A dtest beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - broker
+    environment:
+      - CELERY_BROKER_URL=redis://broker:6379/0
+      - BROKER_URL=redis://broker:6379/0
+      - DATABASE_URL=postgres://django:django@db:5432/django_db
+
+volumes:
+  db_data:
