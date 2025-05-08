@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'apps.orders',
+    'apps.core',
 ]
 
 MIDDLEWARE = [
@@ -40,7 +41,7 @@ ROOT_URLCONF = 'dtest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # ou apenas use diretórios que não colidam com o admin
+        'DIRS': [BASE_DIR / "apps/core/static/frontend"],  # <-- adicione aqui
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
