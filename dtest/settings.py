@@ -41,7 +41,7 @@ ROOT_URLCONF = 'dtest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "apps/core/static/frontend"],  # <-- adicione aqui
+        'DIRS': [],  # ou apenas use diretórios que não colidam com o admin
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
